@@ -7,9 +7,6 @@ st.set_page_config(page_title="Dashboard de Vendas BI", layout="wide")
 
 st.title("📊 Dashboard Inteligente de Vendas")
 
-# ==========================================
-# FUNÇÃO PARA GERAR TEMPLATE
-# ==========================================
 def gerar_template():
     df_template = pd.DataFrame({
         "Data": [],
@@ -41,18 +38,13 @@ st.download_button(
 
 st.divider()
 
-# ==========================================
-# UPLOAD DO ARQUIVO
-# ==========================================
+
 arquivo = st.file_uploader("📂 Faça upload do arquivo preenchido", type=["xlsx"])
 
 if arquivo:
 
     df = pd.read_excel(arquivo)
 
-    # --------------------------------------
-    # VALIDAÇÃO DE COLUNAS OBRIGATÓRIAS
-    # --------------------------------------
     colunas_obrigatorias = [
         "Data", "Produto/Serviço", "Total da Venda", "Lucro"
     ]
@@ -63,26 +55,16 @@ if arquivo:
         st.error(f"O arquivo não possui as colunas obrigatórias: {colunas_faltando}")
         st.stop()
 
-    # --------------------------------------
-    # TRATAMENTO DE DADOS
-    # --------------------------------------
-
-    # ======================================
-# TRATAMENTO ROBUSTO
-# ======================================
 
     df["Data"] = pd.to_datetime(df["Data"], dayfirst=True, errors="coerce")
     df = df.dropna(subset=["Data"])
 
-    # Converter colunas numéricas base
     df["Quantidade"] = pd.to_numeric(df["Quantidade"], errors="coerce")
     df["Valor Unitário"] = pd.to_numeric(df["Valor Unitário"], errors="coerce")
     df["Custo Unitário"] = pd.to_numeric(df["Custo Unitário"], errors="coerce")
 
-    # Remover linhas sem valores essenciais
     df = df.dropna(subset=["Quantidade", "Valor Unitário", "Custo Unitário"])
 
-    # 🔥 REPROCESSAR CÁLCULOS (ignorar fórmulas do Excel)
     df["Total da Venda"] = df["Quantidade"] * df["Valor Unitário"]
     df["Custo Total"] = df["Quantidade"] * df["Custo Unitário"]
     df["Lucro"] = df["Total da Venda"] - df["Custo Total"]
@@ -94,9 +76,6 @@ if arquivo:
     df["Mes"] = df["Data"].dt.to_period("M").astype(str)
 
 
-    # --------------------------------------
-    # KPIs
-    # --------------------------------------
     total_vendas = df["Total da Venda"].sum()
     total_lucro = df["Lucro"].sum()
     ticket_medio = df["Total da Venda"].mean() if total_vendas > 0 else 0
@@ -111,13 +90,9 @@ if arquivo:
 
     st.divider()
 
-    # ==========================================
-    # GRÁFICOS
-    # ==========================================
 
     col1, col2 = st.columns(2)
 
-    # Vendas por mês
     vendas_mes = df.groupby("Mes")["Total da Venda"].sum().reset_index()
     fig1 = px.line(
         vendas_mes,
@@ -128,7 +103,6 @@ if arquivo:
     )
     col1.plotly_chart(fig1, use_container_width=True)
 
-    # Vendas por produto
     vendas_prod = df.groupby("Produto/Serviço")["Total da Venda"].sum().reset_index()
     fig2 = px.bar(
         vendas_prod.sort_values("Total da Venda", ascending=False),
@@ -138,7 +112,6 @@ if arquivo:
     )
     col2.plotly_chart(fig2, use_container_width=True)
 
-    # Forma de pagamento
     if "Forma de Pagamento" in df.columns:
         fig3 = px.pie(
             df,
@@ -148,9 +121,6 @@ if arquivo:
         )
         st.plotly_chart(fig3, use_container_width=True)
 
-    # ==========================================
-    # INSIGHTS AUTOMÁTICOS
-    # ==========================================
     st.subheader("🧠 Insights Automáticos")
 
     produto_top = vendas_prod.sort_values("Total da Venda", ascending=False).iloc[0]["Produto/Serviço"]
@@ -164,9 +134,6 @@ if arquivo:
     💡 Margem média do negócio: **{margem:.2f}%**
     """)
 
-    # ==========================================
-    # STORYTELLING EXECUTIVO
-    # ==========================================
     st.subheader("📖 Storytelling Executivo")
 
     if margem > 30:
