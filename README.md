@@ -99,10 +99,10 @@ dashboard_vendas_bi/
 
 <pre>
 # Clone o repositório
-git clone https://github.com/seuusuario/sales-bi-dashboard.git
+git clone https://github.com/RenanCrvlho/dashboard_vendas_bi.git
 
 # Entre na pasta
-cd sales-bi-dashboard
+cd dashboard_vendas_bi
 
 # Instale as dependências
 pip install -r requirements.txt
@@ -113,44 +113,19 @@ streamlit run app.py
 
 ---
 
-<h2>🌍 Deploy</h2>
-
-A aplicação pode ser publicada facilmente via:
-
-<ul>
-<li>Streamlit Cloud</li>
-<li>Render</li>
-<li>Railway</li>
-<li>AWS</li>
-</ul>
-
----
-
 <h2>📈 Demonstração</h2>
 
-Adicione aqui prints do dashboard ou GIF da aplicação rodando.
-
----
-
-<h2>🎯 Objetivo Profissional</h2>
-
-Este projeto faz parte do meu portfólio para oportunidades em:
-
-<ul>
-<li>Data Analytics</li>
-<li>Business Intelligence</li>
-<li>Data Analysis</li>
-<li>Analytics Engineering</li>
-</ul>
-
-Estou aberto a conexões e oportunidades na área de Dados.
+<img src="assets/screenshot_1.png" width="500"/>
+<img src="assets/screenshot_2.png" width="500"/>
+<img src="assets/screenshot_3.png" width="500"/>
+<img src="assets/screenshot_4.png" width="500"/>
 
 ---
 
 <h2>📬 Contato</h2>
 
-LinkedIn: https://www.linkedin.com/in/seu-link  
-Email: seuemail@email.com  
+LinkedIn: www.linkedin.com/in/renan-carvalho-354286210 
+Email: rfac2000@hotmail.com  
 
 </br>
 
